@@ -73,7 +73,7 @@ export const BlogPostList: React.FC<IResourceComponentsProps> = () => {
                     };
 
                     const category = meta.categoryData?.data?.find(
-                        (item) => item.id == getValue<any>(),
+                        (item) => item.id === getValue<any>(),
                     );
 
                     return category?.title ?? "Loading...";
