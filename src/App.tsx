@@ -8,6 +8,7 @@ import {
 } from "@refinedev/chakra-ui";
 import { Refine , Authenticated} from "@refinedev/core";
 import routerBindings, {
+    CatchAllNavigate,
     NavigateToResource,
     UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
@@ -69,15 +70,21 @@ const App = () => {
                         </Route> */}
                         <Route
                             element={
-                                <ThemedLayoutV2>
-                                    <Outlet />
-                                </ThemedLayoutV2>
+                                <Authenticated
+                                    fallback={
+                                        <CatchAllNavigate to="/login" />
+                                    }
+                                >
+                                    <ThemedLayoutV2>
+                                        <Outlet />
+                                    </ThemedLayoutV2>
+                                </Authenticated>
                             }
                         >
                             <Route index element={<NavigateToResource resource="blog_posts" />} />
                             <Route path="blog-posts">
                                 <Route index element={<BlogPostList />} />
-                                <Route index element={<ChakraUIInferencer />} />
+                                {/* <Route index element={<ChakraUIInferencer />} /> */}
                                 <Route
                                     path="show/:id"
                                     element={<BlogPostShow />}
@@ -91,6 +98,10 @@ const App = () => {
                                     element={<BlogPostCreate />}
                                 />
                             </Route>
+                            
+                            <Route path="*" element={<ErrorComponent />} />
+                        </Route>
+                        <Route>
                             <Route
                                 path="/login"
                                 element={<AuthPage type="login" />}
@@ -107,7 +118,6 @@ const App = () => {
                                 path="/update-password"
                                 element={<AuthPage type="updatePassword" />}
                             />
-                            <Route path="*" element={<ErrorComponent />} />
                         </Route>
                     </Routes>
                     <UnsavedChangesNotifier />
