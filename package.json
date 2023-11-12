@@ -34,7 +34,7 @@
   },
   "scripts": {
     "dev": "refine dev",
-    "build": "refine build",
+    "build": "CI='' refine build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "refine": "refine"
